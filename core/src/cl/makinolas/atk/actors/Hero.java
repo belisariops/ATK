@@ -409,6 +409,11 @@ public class Hero extends Monsters implements IHero {
   }
 
 
+  public void setGravityScale(float f) {
+    myBody.setGravityScale(f);
+  }
+
+
   @Override
   public void damage(int damage, Attacks inflictor)  {
     if(!inflictor.getSource().isHero()){
@@ -483,7 +488,7 @@ public class Hero extends Monsters implements IHero {
   public void interactWithPlatform(Platform platform, WorldManifold worldManifold){
     platform.interactWithHero(this, worldManifold);
   }
-  
+
   @Override
   public void interactWithAttack(Attacks attack, WorldManifold worldManifold){
     attack.manageInteractWithMonster(this, worldManifold);    
@@ -535,6 +540,9 @@ public class Hero extends Monsters implements IHero {
     inertia = true;
   }
 
+  public float getXSpeed() {
+    return myBody.getLinearVelocity().x;
+  }
 
   public void jump(int button) {
 	isJumping = true;

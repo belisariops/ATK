@@ -29,11 +29,13 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
     protected int[] attackAnimations;
     protected int countMeleeFrames;
     protected int actualAnimation;
-    private BodyDef myBodyDefinition;
+    public BodyDef myBodyDefinition;
     private JumpState jumpState;
     private World myWorld;
+    private float gravity;
 
     public SurvivalHero(World survivalWorld) {
+        gravity = 5;
         this.myWorld = survivalWorld;
         character = new Weedle();
         // Set correct collider.
@@ -45,6 +47,7 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
         jumpState = new OnGround();
         jumpState.setHero(this);
         myBodyDefinition.fixedRotation = true;
+        isFacingRight = true;
 
 
     }
@@ -108,6 +111,14 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
     protected void gainExp(int level, Enemies type) {
 
     }
+    public void setState(JumpState state) {
+        jumpState = state;
+    }
+
+    @Override
+    public void setSpeed(float x,float y) {
+        myBody.setLinearVelocity(x,y);
+    }
 
     @Override
     public void interact(GameActor actor2, WorldManifold worldManifold) {
@@ -131,13 +142,17 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
 
     @Override
     public void moveHorizontal(int i, boolean b) {
-        System.out.println("aaaaaaa");
-        myBody.setLinearVelocity(5*i,0);
+        myBody.setLinearVelocity(5*i,myBody.getLinearVelocity().y);
+        isFacingRight = b;
+    }
+
+    public void stopMovement() {
+        myBody.setLinearVelocity(0,myBody.getLinearVelocity().y);
     }
 
     @Override
     public void jump(int i) {
-
+            jumpState.jump();
     }
 
     @Override
@@ -198,7 +213,7 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
         Body myBody = myWorld.createBody(myBodyDefinition);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(getBodySize(character.getWidth()), getBodySize(character.getHeight()));
-        myBody.setGravityScale(1);
+        myBody.setGravityScale(gravity *1);
         myBody.createFixture(shape, 0.5f);
         myBody.resetMassData();
         shape.dispose();
@@ -214,4 +229,16 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
     public void setWorld(World myWorld) {
         setWorld(myWorld, new Vector2(2,3));
     }
+
+    public void setGravityScale(float f) {
+        myBody.setGravityScale(gravity *f);
+    }
+
+    public float getXSpeed() {
+        return myBody.getLinearVelocity().x;
+    }
+
+
+
 }
+

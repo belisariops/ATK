@@ -1,5 +1,7 @@
 package cl.makinolas.atk.minigames;
 
+import cl.makinolas.atk.actors.items.Inventory;
+import cl.makinolas.atk.actors.ui.IHero;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -23,7 +25,7 @@ import cl.makinolas.atk.actors.platform.Platform;
 import cl.makinolas.atk.stages.AbstractStage;
 import cl.makinolas.atk.stages.OnWall;
 
-public class MinigameCharacter extends AnimatedActor implements ICharacter{
+public class MinigameCharacter extends AnimatedActor implements ICharacter, IHero {
   
   
   private BodyDef myBodyDefinition;
@@ -111,7 +113,12 @@ public class MinigameCharacter extends AnimatedActor implements ICharacter{
     if (isJumping == true)
       state.countFrames();    
   }
-  
+
+  @Override
+  public void moveHorizontal(int i, boolean b) {
+
+  }
+
   public void checkPosition(float delta) {
     accumulator += delta;
         
@@ -173,10 +180,50 @@ public class MinigameCharacter extends AnimatedActor implements ICharacter{
   state.restarCount();
     state.jump();
   }
-  
+
+  @Override
+  public Inventory getInventory() {
+    return null;
+  }
+
+  @Override
+  public void attackPrimary() {
+
+  }
+
+  @Override
+  public void attackSecondary() {
+
+  }
+
+  @Override
+  public void prevAllie() {
+
+  }
+
+  @Override
+  public void nextAllie() {
+
+  }
+
+  @Override
+  public void foo() {
+
+  }
+
   public void isNotPressingSpace() {
     isJumping = false;
     state.release();
+  }
+
+  @Override
+  public void setWorld(World myWorld, Vector2 initialPosition) {
+
+  }
+
+  @Override
+  public void setWorld(World myWorld) {
+
   }
 
   @Override
@@ -184,12 +231,22 @@ public class MinigameCharacter extends AnimatedActor implements ICharacter{
     this.state = state;
     this.state.setHero(this);
   }
-  
+
+  @Override
+  public void setGravityScale(float f) {
+
+  }
+
   @Override
   public void setSpeed(float x, float y) {
     myBody.setLinearVelocity(x, y);
   }
-  
+
+  @Override
+  public float getXSpeed() {
+    return 0;
+  }
+
   public void landedPlatform(WorldManifold worldManifold, Platform platform){
     for(int i = 0; i < worldManifold.getNumberOfContactPoints(); i++){
       if(worldManifold.getPoints()[i].y < myBody.getPosition().y && (worldManifold.getNormal().y > 0.95 || worldManifold.getNormal().y < -0.95)){
