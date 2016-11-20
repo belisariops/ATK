@@ -1,5 +1,7 @@
 package cl.makinolas.atk.minigames;
 
+import cl.makinolas.atk.actors.bosses.Boss;
+import cl.makinolas.atk.actors.enemies.Enemy;
 import cl.makinolas.atk.actors.items.Inventory;
 import cl.makinolas.atk.actors.ui.IHero;
 import com.badlogic.gdx.Gdx;
@@ -25,7 +27,7 @@ import cl.makinolas.atk.actors.platform.Platform;
 import cl.makinolas.atk.stages.AbstractStage;
 import cl.makinolas.atk.stages.OnWall;
 
-public class MinigameCharacter extends AnimatedActor implements ICharacter, IHero {
+public class MinigameCharacter extends AnimatedActor implements ICharacter,IHero {
   
   
   private BodyDef myBodyDefinition;
@@ -265,7 +267,22 @@ public class MinigameCharacter extends AnimatedActor implements ICharacter, IHer
       }
     }
   }
-  
+
+  @Override
+  public void interactWithMonster(Enemy enemy) {
+
+  }
+
+  @Override
+  public void interactWithMonster(Boss boss) {
+
+  }
+
+  @Override
+  public void setMovablePLatformSpeed(int x, int y) {
+
+  }
+
   public void setDead() {
     dead = true;   
   }

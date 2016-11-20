@@ -84,7 +84,10 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
 
     @Override
     public void beginContact(Contact contact) {
+        GameActor actor1 = (GameActor) contact.getFixtureA().getBody().getUserData();
+        GameActor actor2 = (GameActor) contact.getFixtureB().getBody().getUserData();
 
+        actor1.interact(actor2, contact.getWorldManifold());
     }
 
     @Override

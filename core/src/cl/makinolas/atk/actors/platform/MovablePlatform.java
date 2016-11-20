@@ -2,6 +2,7 @@ package cl.makinolas.atk.actors.platform;
 
 import cl.makinolas.atk.GameConstants;
 import cl.makinolas.atk.actors.Hero;
+import cl.makinolas.atk.actors.ui.IHero;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -91,13 +92,13 @@ public class MovablePlatform extends Platform {
   }
 
   @Override
-  public void interactWithHero(Hero hero, WorldManifold worldManifold){
+  public void interactWithHero(IHero hero, WorldManifold worldManifold){
     heroIsInPlatform = true;
     hero.landedPlatform(worldManifold, this);
   }
 
   @Override
-  public void endHeroInteraction(Hero hero, WorldManifold worldManifold) {
+  public void endHeroInteraction(IHero hero, WorldManifold worldManifold) {
     heroIsInPlatform = false;
     hero.setMovablePLatformSpeed(0,0);
   }

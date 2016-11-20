@@ -1,9 +1,13 @@
 package cl.makinolas.atk.actors.ui;
 
 import cl.makinolas.atk.actors.JumpState;
+import cl.makinolas.atk.actors.bosses.Boss;
+import cl.makinolas.atk.actors.enemies.Enemy;
 import cl.makinolas.atk.actors.items.Inventory;
+import cl.makinolas.atk.actors.platform.Platform;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.WorldManifold;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
@@ -45,4 +49,14 @@ public interface IHero {
     void setSpeed(float x,float y);
 
     float getXSpeed();
+
+    void landedPlatform(WorldManifold worldManifold, Platform platform);
+
+    void interactWithMonster(Enemy enemy);
+
+    /*Overloading solucionar esto*/
+    void interactWithMonster(Boss boss);
+
+
+    void setMovablePLatformSpeed(int x, int y);
 }

@@ -6,6 +6,7 @@ import cl.makinolas.atk.actors.friend.Enemies;
 import cl.makinolas.atk.actors.friend.EvStates.EvState;
 import cl.makinolas.atk.actors.fx.FxManager;
 import cl.makinolas.atk.actors.friend.Friend;
+import cl.makinolas.atk.actors.ui.IHero;
 
 public abstract class Monsters extends AnimatedActor {
   
@@ -39,8 +40,8 @@ public abstract class Monsters extends AnimatedActor {
   
   public abstract float getMonsterWidth();
   public abstract float getMonsterHeight();
-  public void interactWithHero2(Hero hero) {
-    meleeAttack(hero, isAttacking);       
+  public void interactWithHero2(IHero hero) {
+    meleeAttack((Monsters)hero, isAttacking);
   }
   public void gainExperience(int level, Enemies type) {
     gainExp(level, type);

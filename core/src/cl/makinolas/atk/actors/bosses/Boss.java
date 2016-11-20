@@ -1,5 +1,6 @@
 package cl.makinolas.atk.actors.bosses;
 
+import cl.makinolas.atk.actors.ui.IHero;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
@@ -95,7 +96,7 @@ public abstract class Boss extends Monsters implements IBoss{
   }
   
   @Override
-  public void interactWithHero(Hero hero, WorldManifold worldManifold){
+  public void interactWithHero(IHero hero, WorldManifold worldManifold){
     interactWithHero2(hero);
     hero.interactWithMonster(this);
   }

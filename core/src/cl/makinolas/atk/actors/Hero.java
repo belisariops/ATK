@@ -1,5 +1,6 @@
 package cl.makinolas.atk.actors;
 
+import cl.makinolas.atk.actors.bosses.Boss;
 import cl.makinolas.atk.actors.items.ItemActor;
 import cl.makinolas.atk.actors.ui.IHero;
 import cl.makinolas.atk.stages.*;
@@ -381,6 +382,21 @@ public class Hero extends Monsters implements IHero {
     	  onWall = true;
       }
     }
+  }
+
+  @Override
+  public void interactWithMonster(Enemy enemy) {
+
+  }
+
+  @Override
+  public void interactWithMonster(Boss boss) {
+
+  }
+
+  @Override
+  public void setMovablePLatformSpeed(int x, int y) {
+
   }
 
   public void setAnimation(){

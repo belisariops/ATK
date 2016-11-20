@@ -7,8 +7,11 @@ import cl.makinolas.atk.actors.JumpState;
 import cl.makinolas.atk.actors.Monsters;
 import cl.makinolas.atk.actors.OnGround;
 import cl.makinolas.atk.actors.attacks.Attacks;
+import cl.makinolas.atk.actors.bosses.Boss;
+import cl.makinolas.atk.actors.enemies.Enemy;
 import cl.makinolas.atk.actors.friend.*;
 import cl.makinolas.atk.actors.items.Inventory;
+import cl.makinolas.atk.actors.platform.Platform;
 import cl.makinolas.atk.actors.ui.IHero;
 import cl.makinolas.atk.minigames.ICharacter;
 import cl.makinolas.atk.stages.AbstractStage;
@@ -48,6 +51,7 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
         jumpState.setHero(this);
         myBodyDefinition.fixedRotation = true;
         isFacingRight = true;
+        parent = character;
 
 
     }
@@ -122,7 +126,7 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
 
     @Override
     public void interact(GameActor actor2, WorldManifold worldManifold) {
-
+            actor2.interactWithHero(this,worldManifold);
     }
 
     @Override
@@ -162,6 +166,11 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
 
     @Override
     public void attackPrimary() {
+        if(character.getMagic() >= 100){
+            character.setMagic(character.getMagic() - 100);
+            GameActor fireball = character.getFriendAttack(myWorld, myBody.getPosition().x,myBody.getPosition().y,isFacingRight, this);
+            ((AbstractStage) getStage()).addGameActor(fireball);
+        }
 
     }
 
@@ -238,6 +247,30 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
         return myBody.getLinearVelocity().x;
     }
 
+    public void landedPlatform(WorldManifold worldManifold, Platform platform){
+        this.jumpState = new OnGround();
+        this.jumpState.setHero(this);
+    }
+
+    @Override
+    public void interactWithMonster(Enemy enemy) {
+
+    }
+
+    @Override
+    public void interactWithMonster(Boss boss) {
+
+    }
+
+    @Override
+    public void setMovablePLatformSpeed(int x, int y) {
+
+    }
+
+    @Override
+    public void interactWithPlatform(Platform platform, WorldManifold worldManifold) {
+            this.landedPlatform(worldManifold,platform);
+    }
 
 
 }
