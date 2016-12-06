@@ -21,6 +21,9 @@ import cl.makinolas.atk.screen.MenuScreen;
 import cl.makinolas.atk.start.StartingJourneyStage;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoadStage extends Stage {
 
@@ -30,6 +33,7 @@ public class LoadStage extends Stage {
   private int lastSelected;
   private Title arrow;
   int cantidad_juegos;
+  List<String> textFiles = new ArrayList<String>();
   String [] titulos;
   LoadActor secondSave;
   LoadActor firstSave;
@@ -41,8 +45,14 @@ public class LoadStage extends Stage {
     if (!saves.exists()) {
       saves.mkdir();
     }
-    cantidad_juegos = saves.list().length;
-    titulos = saves.list();
+    for (File file : saves.listFiles()) {
+      if (file.getName().endsWith((".sav"))) {
+        cantidad_juegos++;
+        textFiles.add(file.getName());
+      }
+    }
+    titulos = new String[cantidad_juegos];
+    titulos = textFiles.toArray(titulos);
     lastSelected = 0;
     this.myGame = myGame;
     options= new LoadActor[2];

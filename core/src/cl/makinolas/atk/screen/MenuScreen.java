@@ -18,6 +18,8 @@ import cl.makinolas.atk.stages.MiniGameStage;
 import cl.makinolas.atk.stages.OptionsStage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuScreen extends SimpleScreen {
 
@@ -94,16 +96,27 @@ public class MenuScreen extends SimpleScreen {
   }
 
   protected void newGame() {
+    int cantidad_juegos = 0;
+    List<String> textFiles = new ArrayList<String>();
+    String [] titulos;
     File saves = new File("Save");
     if (!saves.exists()) {
       saves.mkdir();
     }
+    for (File file : saves.listFiles()) {
+      if (file.getName().endsWith((".sav"))) {
+        cantidad_juegos++;
+        textFiles.add(file.getName());
+      }
+    }
+    titulos = new String[cantidad_juegos];
+    titulos = textFiles.toArray(titulos);
     int actual;
     if(saves.list().length==0){
       actual = 0;
     }
     else{
-      String last_title = saves.list()[saves.list().length-1];
+      String last_title = titulos[cantidad_juegos - 1];
       actual = Integer.parseInt(last_title.substring(3,4));
     }
     actual++;
