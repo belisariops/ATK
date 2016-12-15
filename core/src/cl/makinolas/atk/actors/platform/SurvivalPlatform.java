@@ -16,7 +16,7 @@ public class SurvivalPlatform extends Platform {
 
     public SurvivalPlatform(World myWorld, String textureCode, int x, int y, int widthTiles, int heightTiles,SurvivalModeStage stage){
         super (myWorld, textureCode, x, y, widthTiles, heightTiles);
-        enemy = new Gastly().returnStayAndShootEnemy(myWorld,x,y+10,true);
+        enemy = new Gastly().returnStayAndShootEnemy(myWorld,x+2,y+5,true);
         stage.addGameActor(enemy);
     }
 

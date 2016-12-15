@@ -93,7 +93,7 @@ public class MinigameStage extends AbstractStage implements ContactListener{
     addListener(new MinigameInputController(hero,group));
     accumulator = 0;
     renderer = new Box2DDebugRenderer();
-    //setupCamera();
+    setupCamera();
   }
 
   public void addGameActor(GameActor actor) {
@@ -157,8 +157,8 @@ public class MinigameStage extends AbstractStage implements ContactListener{
       large.draw(getBatch(), "SCORE : " + (int) score, 100 + getCamera().position.x ,  300);
       normal.draw(getBatch(), "Highscore : "+hgsc, 140 + getCamera().position.x ,  280);
       getBatch().end();
-      //camera.update();
-      //renderer.render(suMundo, camera.combined);
+      camera.update();
+      renderer.render(suMundo, camera.combined);
   }
 
   @Override

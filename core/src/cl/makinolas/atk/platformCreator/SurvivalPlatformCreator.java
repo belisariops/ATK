@@ -26,17 +26,19 @@ public class SurvivalPlatformCreator extends AbstractPlatformCreator {
     private float playerHeight;
     private Array<GameActor> gameActors;
     private AbstractStage stage;
+    private float lasPosition;
 
 
     public SurvivalPlatformCreator(World suMundo, AbstractStage stage,
                                    int xInitialPosition, int yInitialPosition, Group ground) {
         super(suMundo,stage,xInitialPosition,yInitialPosition,ground);
-        nextPlatformPosition = 3;
+        nextPlatformPosition = -17;
         triplePlatform = false;
         doublePlatform = false;
         cuadruplePlatform = false;
         gravity = 100;
-        playerHeight=0;
+        playerHeight=-20;
+        lasPosition = -10000;
         this.stage = stage;
     }
 
@@ -46,12 +48,17 @@ public class SurvivalPlatformCreator extends AbstractPlatformCreator {
 
     @Override
     public void createPlatform(float cameraPositionX, float cameraPositionY) {
+        System.out.println(playerHeight);
+        if (stage.getPlayerPosition().y < lasPosition) {
+            System.out.println(this.lastYPosition);
+            return;
+        }
         double random = Math.random();
         if (random >= 0.75 && !triplePlatform) {
             //platform1.setPosition(0,(cameraPositionY/18)-5);
-            platform1 = new SurvivalPlatform(myWorld, "CU", 0, nextPlatformPosition, 4 , 1, (SurvivalModeStage)stage);
-            platform2 = new Platform(myWorld, "CU", 7, nextPlatformPosition, 4 , 1);
-            platform3 = new Platform(myWorld, "CU", 14, nextPlatformPosition, 4 , 1);
+            platform1 = new SurvivalPlatform(myWorld, "CU", -9, nextPlatformPosition, 4 , 1, (SurvivalModeStage)stage);
+            platform2 = new Platform(myWorld, "CU", -2, nextPlatformPosition, 4 , 1);
+            platform3 = new Platform(myWorld, "CU", 5, nextPlatformPosition, 4 , 1);
             ground.addActor(platform1);
             ground.addActor(platform2);
             ground.addActor(platform3);
@@ -62,8 +69,8 @@ public class SurvivalPlatformCreator extends AbstractPlatformCreator {
         }
 
         else if (random >= 0.5 && !doublePlatform) {
-            platform1 = new Platform(myWorld, "CU", 4, nextPlatformPosition, 4 , 1);
-            platform2 = new Platform(myWorld, "CU", 10, nextPlatformPosition, 4 , 1);
+            platform1 = new Platform(myWorld, "CU", -5, nextPlatformPosition, 4 , 1);
+            platform2 = new Platform(myWorld, "CU", 1, nextPlatformPosition, 4 , 1);
             ground.addActor(platform1);
             ground.addActor(platform2);
             doublePlatform = true;
@@ -73,10 +80,10 @@ public class SurvivalPlatformCreator extends AbstractPlatformCreator {
         }
 
         else if (random < 0.5 && !cuadruplePlatform) {
-            platform1 = new Platform(myWorld, "CU", 0, nextPlatformPosition, 3 , 1);
-            platform2 = new Platform(myWorld, "CU", 5, nextPlatformPosition, 3 , 1);
-            platform3 = new Platform(myWorld, "CU", 10, nextPlatformPosition, 3 , 1);
-            platform4 = new Platform(myWorld, "CU", 15, nextPlatformPosition, 3 , 1);
+            platform1 = new Platform(myWorld, "CU", -9, nextPlatformPosition, 3 , 1);
+            platform2 = new Platform(myWorld, "CU", -4, nextPlatformPosition, 3 , 1);
+            platform3 = new Platform(myWorld, "CU", 1, nextPlatformPosition, 3 , 1);
+            platform4 = new Platform(myWorld, "CU", 6, nextPlatformPosition, 3 , 1);
             ground.addActor(platform1);
             ground.addActor(platform2);
             ground.addActor(platform3);

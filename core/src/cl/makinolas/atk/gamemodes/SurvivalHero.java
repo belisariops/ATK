@@ -38,6 +38,8 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
     private long cooldownTimer;
     private boolean[] isSinging = {false, false, false, false};
     private float xVelocity;
+    private int health;
+    private boolean isDead;
 
     public SurvivalHero(World survivalWorld) {
         this.myWorld = survivalWorld;
@@ -55,6 +57,8 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
         myWorld.setGravity(new Vector2(0,30));
         cooldownTimer = 0;
         xVelocity = 0;
+        health = 20;
+        isDead = false;
 
 
     }
@@ -88,6 +92,10 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
 
     @Override
     public void damage(int damage, Attacks inflictor) {
+        health -= damage;
+        if (health < 0 ) {
+            isDead = true;
+        }
 
     }
 
@@ -99,7 +107,7 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
 
     @Override
     public void interactWithMonster(Enemy enemy) {
-
+        System.out.println("Daño enemigo 2");
     }
 
     @Override
@@ -109,7 +117,7 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
 
     @Override
     public void interactWithMonster(Boss boss) {
-            
+        System.out.println("Daño enemigo 1");
     }
 
     @Override
@@ -181,6 +189,19 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
     @Override
     public void interact(GameActor actor2, WorldManifold worldManifold) {
             actor2.interactWithHero(this,worldManifold);
+    }
+
+    @Override
+    public void interactWithAttack(Attacks attack, WorldManifold worldManifold){
+        attack.manageInteractWithMonster(this, worldManifold);
+        System.out.println("Daño enemigo 3");
+    }
+
+    @Override
+    public void interactWithEnemy(Enemy enemy, WorldManifold worldManifold){
+        interactWithMonster( enemy);
+        enemy.interactWithHero2(this);
+        System.out.println("Daño enemigo 4");
     }
 
     @Override
@@ -261,6 +282,10 @@ public class SurvivalHero extends Monsters implements ICharacter, IHero {
     @Override
     public void isNotPressingSpace() {
 
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     @Override

@@ -29,8 +29,6 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
     private World survivalWorld;
     private final float frameTime = 1 / 100f;
     private Array<GameActor> gameActors;
-    private OrthographicCamera camera;
-    private Box2DDebugRenderer renderer;
     private Platform initialPlatform;
     private Group ground, mons, ui, deco;
     private IHero hero;
@@ -38,14 +36,19 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
     private SurvivalPlatformCreator plataformCreator;
     private CameraPosition cameraPosition;
 
+    private OrthographicCamera camera;
+    private Box2DDebugRenderer renderer;
+
     //Agregar requisitode calidad y restriccion
     public SurvivalModeStage(Viewport v, GameScreen actualScreen, Game game) {
         super(v);
+
+        renderer = new Box2DDebugRenderer();
         myScreen = actualScreen;
         gameActors = new Array<GameActor>();
         survivalWorld = new World(new Vector2(0, -30), true);
         survivalWorld.setContactListener(this);
-        initialPlatform =  new Platform(survivalWorld, "CU", 0, 0, 20, 1);
+        initialPlatform =  new Platform(survivalWorld, "CU", -9, -7, 20, 1);
         addActor(new Background("Background/Night.png", getCamera()));
         ground = new Group();
         ground.addActor(initialPlatform);
@@ -57,14 +60,14 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
         ui = new Group();
         addActor(ui);
 
-
         MobileGroup group = new MobileGroup(false);
         Gdx.input.setInputProcessor(this);
 
         cameraObserver = new CameraPosition();
-        plataformCreator = new SurvivalPlatformCreator(survivalWorld, this, 0, 0, ground);
+        plataformCreator = new SurvivalPlatformCreator(survivalWorld, this, -9, -7, ground);
         hero = new SurvivalHero(survivalWorld);
         hero.setWorld(survivalWorld);
+        this.setPlayerPosition(hero.getBody().getPosition());
         addGameActor((GameActor)hero);
         ui.addActor(group);
         ui.addActor(BagVis.getInstance());
@@ -76,21 +79,24 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
         //cameraPosition = new CameraPosition(cameraObserver.getPositionX(),cameraObserver.getPositionY());
         cameraObserver.setPosition(getCamera().position.x,getCamera().position.y);
 
-
+        camera = new OrthographicCamera(32, 24);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
+        camera.update();
 
 
 
     }
 
+
     @Override
     public void changeCamera(float x, float y) {
         //camera.position.set((x + 7), 7, 0);
         //getCamera().position.set(0, height + 20, 0);
-        Camera camera = getCamera();
-        camera.translate(0,y,0);
+        camera.position.set(x, y, 0);
+        getCamera().position.set(x * 20, y * 20, 0);
+        getCamera().update();
+        cameraObserver.setPosition(camera.position.x,camera.position.y/20);
         camera.update();
-        cameraObserver.setPosition(camera.position.x,camera.position.y);
-        //camera.update();
     }
 
     @Override
@@ -102,7 +108,9 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
 
     @Override
     public void endContact(Contact contact) {
-
+        GameActor actor1 = (GameActor) contact.getFixtureA().getBody().getUserData();
+        GameActor actor2 = (GameActor) contact.getFixtureB().getBody().getUserData();
+        actor1.endInteraction(actor2, contact.getWorldManifold());
     }
 
     @Override
@@ -121,17 +129,43 @@ public class SurvivalModeStage extends AbstractStage implements ContactListener{
         gameActors.add(actor);
     }
 
+    @Override
+    public void draw() {
+        super.draw();
+        camera.update();
+        renderer.render(survivalWorld, camera.combined);
+    }
+
+
 
     @Override
     public void act(float delta){
         super.act(delta);
+
+        this.setPlayerPosition(hero.getBody().getPosition());
         plataformCreator.update(cameraObserver,null);
         /*elapsed time es static en abstract stage, hay que agregarle el delta o no funciona la animacion*/
         AbstractStage.elapsedTime += delta;
         survivalWorld.step(frameTime, 6, 2);
-        height += Math.abs(0.00001*Math.sin(height)) + (delta*delta);
+        height += 1000*Math.abs(Math.sin(0.0001*height))*delta + (delta*delta);
+
         plataformCreator.setPlayerHeight(height);
-        changeCamera(0,height);
+        changeCamera(0,height-20);
+
+        if (hero.isDead()) {
+            myScreen.mainMenu();
+        }
+
+        for (GameActor actor : gameActors) {
+            Body actorBody = actor.getBody();
+            if (actorBody.getPosition().y < height -30) {
+                gameActors.removeValue(actor,true);
+                survivalWorld.destroyBody(actorBody);
+                actor.remove();
+            }
+        }
+
+
 
 
     }

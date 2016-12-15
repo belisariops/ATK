@@ -19,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public interface IHero {
     public Stage getStage();
 
+    public boolean isHero();
+
     public void setAnimation();
 
     public void act(float delta);
@@ -60,4 +62,6 @@ public interface IHero {
     void interactWithMonster(Boss boss);
 
     void stopMovement();
+
+    boolean isDead();
 }
