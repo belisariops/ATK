@@ -89,7 +89,8 @@ public class Platform extends GameActor {
   
   @Override
   public void interactWithHero(Hero hero, WorldManifold worldManifold){
-    hero.landedPlatform(worldManifold, this);
+	  hero.getBody().applyForceToCenter(0, 200, true);
+	  hero.landedPlatform(worldManifold, this);
   }
   
   @Override
