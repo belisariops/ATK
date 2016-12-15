@@ -66,7 +66,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 		if(hero.getBackupAllies().size!=0)
 			backup = new FriendInfo(hero.getBackupAllies().get(0));
 		allyInfo();
-		BackupInfo();
+		backupInfo();
 
 		Skin uskin = new Skin(Gdx.files.internal("Data/uiskin.json"));
 		TextButton exitButton = new TextButton("Exit PokeComputer", uskin);
@@ -88,7 +88,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 				swapPokemon();
 				mplayer.PlayPressButton();
 				allyInfo();
-				BackupInfo();
+				backupInfo();
 			}
 		});
 		stage.addActor(swapButton);
@@ -126,7 +126,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 			public void clicked(InputEvent event, float x, float y) {
 				mplayer.PlayPressButton();
 				indexBackupHandler(-1);
-				BackupInfo();
+				backupInfo();
 
 			}
 		});
@@ -139,7 +139,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 			public void clicked(InputEvent event, float x, float y) {
 				mplayer.PlayPressButton();
 				indexBackupHandler(1);
-				BackupInfo();
+				backupInfo();
 
 			}
 		});
@@ -151,6 +151,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				changePage(1);
+				backupInfo();
 			}
 		});
 		stage.addActor(pageRightBackupButton);
@@ -161,6 +162,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				changePage(-1);
+				backupInfo();
 			}
 		});
 		stage.addActor(pageLeftBackupButton);
@@ -221,9 +223,11 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 	 * */
 	private void setTeamSelected(int i){
 		index_team = i;
+		allyInfo();
 	}
 	private void setBackupSelected(int i){
 		index_backup = i;
+		backupInfo();
 	}
 	//
 	
@@ -339,8 +343,8 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 		large.draw(batch,"PokeComputer",228,460);
 		large.draw(batch,"Pokemon Team:",60,420);
 		large.draw(batch,"Pokemon Backup:",60,330);
-		large.draw(batch,"Team Index:",440,260);
-		large.draw(batch,"Backup Index:",440,160);
+		large.draw(batch,"Team Index:",440,210);
+		large.draw(batch,"Backup Index:",440,125);
 		batch.end();
 	}
 
@@ -370,7 +374,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 		stage.addActor(ally);
 	}
 
-	private void BackupInfo() {
+	private void backupInfo() {
 		if(hero.getBackupAllies().size==0)
 			return;
 		backup.setFriend(hero.getBackupAllies().get(index_backup));
