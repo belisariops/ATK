@@ -221,7 +221,7 @@ public class Hero extends Monsters implements IHero {
 	 * 
 	 */
 
-	// BORRAR
+	// BORRAR EN VERSION FINAL
 	public void changeAlliesTeam(int index) {
 		if (!isJumping) {
 			System.out.println("changeAlliesTeam , isjumping " + !isJumping + "getDead " + getActualFriend().getDead()
@@ -232,7 +232,6 @@ public class Hero extends Monsters implements IHero {
 			setActualFriend(backupAllies.get(index));
 			backupAllies.set(index, allies.get(indexFriend));
 			allies.set(indexFriend, getActualFriend());
-			// indexFriend = index;
 			backupIndexFriend = index;
 			parent = getActualFriend();
 			states = parent.getStateEfectList();
@@ -242,7 +241,7 @@ public class Hero extends Monsters implements IHero {
 		}
 	}
 
-	// BORRAR
+	// BORRAR EN VERSION FINAL
 	public void foo() {
 		for (int i = 1; i <= backupAllies.size; i++) {
 			int j = (backupIndexFriend - i + backupAllies.size) % backupAllies.size;
@@ -253,13 +252,13 @@ public class Hero extends Monsters implements IHero {
 		}
 	}
 
-	/*
-	 * swapTeamAllies(i,j) intercambia la posicion i el arreglo de pokemon
+	/* swapTeamAllies(i,j)
+	 * Intercambia la posicion i el arreglo de pokemon
 	 * jugables (allies) con el pokemon de la posicion j del arreglo de pokemon
 	 * no jugables durante una partida (backupAllies)
 	 */
 	// MODIFICAR PARA POSIBLEMENTE ACTUALIZAR LA PANTALLA LUEGO DE EL
-	// INTERCAMBIO
+	// INTERCAMBIO, REVISAR IMAGENES EN NIVEL LUEGO DE INTERCAMBIAR POKEMON!!!
 	public void swapTeamAllies(int i, int j) {
 		if (backupAllies.size != 0) {
 			Friend auxfriend = backupAllies.get(j);

@@ -58,10 +58,11 @@ public class InputController extends InputListener implements MobileKeyListener{
                     hero.nextAllie();
                     break;
                     
-                //BORRAR!!!!!!!!!!!!!!!!!!!!
+                //BORRAR EN VERSION FINAL!!!!!!!!!!!!!!!!!!!!
                 case Input.Keys.NUM_3:
                 	hero.foo();
                 	break;
+                //
                 	
                 case Input.Keys.H:
                 	hero.gainExp(100, Enemies.EEVEE);

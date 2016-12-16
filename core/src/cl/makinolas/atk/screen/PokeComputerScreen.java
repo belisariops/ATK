@@ -229,7 +229,6 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 		index_backup = i;
 		backupInfo();
 	}
-	//
 	
 	
 	/* ChangePage(int):
@@ -248,13 +247,6 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 		//cambiar el numero de pagina
 		changePageNumber(change);
 		
-		/*debug
-		System.out.println("alliesImages size: " + alliesImages.size());
-		System.out.println("backupImages size: " + backupImages.size());
-		System.out.println("page limit: "+ page_limit);
-		System.out.println("page index: "+index_page);
-		System.out.println("backup index: " + index_backup +" team index: "+ index_team);
-		*/
 		
 		//modificar las nuevas imagenes
 		for (int i = 0; i < 18 && i + index_page * 18 < backup_size ; i++) {
@@ -344,7 +336,7 @@ public class PokeComputerScreen extends SimpleScreen implements KeyHandable {
 		large.draw(batch,"Pokemon Team:",60,420);
 		large.draw(batch,"Pokemon Backup:",60,330);
 		large.draw(batch,"Team Index:",440,210);
-		large.draw(batch,"Backup Index:",440,125);
+		large.draw(batch,"Backup Index:",440,130);
 		batch.end();
 	}
 
